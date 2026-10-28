@@ -46,8 +46,7 @@ async function loadRecognitionModel(){
   const weightResponse=await fetch(weightUrl);
   if(!weightResponse.ok)throw new Error('Model weights returned HTTP '+weightResponse.status);
   const weightData=await weightResponse.arrayBuffer();
-  const modelName=modelJson.modelTopology?.model_config?.config?.name||'sequential_1';
-  const weightSpecs=modelJson.weightsManifest.flatMap(group=>group.weights).map(weight=>({...weight,name:weight.name.includes('/')?weight.name:modelName+'/'+weight.name}));
+  const weightSpecs=modelJson.weightsManifest.flatMap(group=>group.weights);
   model=await tf.loadLayersModel({load:async()=>({modelTopology:modelJson.modelTopology,weightSpecs,weightData})});
   const labelData=await (await fetch(LABELS_URL)).json();
   labels=Array.isArray(labelData)?labelData:(labelData.labels||labelData.classes||labelData.class_names||[]);
