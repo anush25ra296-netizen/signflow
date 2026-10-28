@@ -73,9 +73,9 @@ function recognizeFrame(){
  if(video.readyState>=2&&video.currentTime!==lastVideoTime){lastVideoTime=video.currentTime;try{
   const result=handLandmarker.detectForVideo(video,performance.now());
   if(result.landmarks&&result.landmarks.length){
-   const pts=result.landmarks[0],wrist=pts[0];drawTraces(pts);let scale=0;
-   for(const p of pts)scale=Math.max(scale,Math.abs(p.x-wrist.x),Math.abs(p.y-wrist.y),Math.abs(p.z-wrist.z));
-   const input=pts.flatMap(p=>[(p.x-wrist.x)/(scale||1),(p.y-wrist.y)/(scale||1),(p.z-wrist.z)/(scale||1)]);
+   const pts=result.landmarks[0],wrist=pts[0];drawTraces(pts);
+   const scale=Math.hypot(pts[9].x-wrist.x,pts[9].y-wrist.y,pts[9].z-wrist.z)||1;
+   const input=pts.flatMap(p=>[(p.x-wrist.x)/scale,(p.y-wrist.y)/scale,(p.z-wrist.z)/scale]);
    const tensor=tf.tensor2d([input]);const prediction=model.predict(tensor);const scores=prediction.dataSync();tensor.dispose();prediction.dispose();
    const ranked=Array.from(scores,(score,i)=>({label:String(labels[i]??'').toUpperCase().replace(/[^A-Z]/g,'').slice(0,1),score:Number(score)})).filter(x=>x.label).sort((a,b)=>b.score-a.score).slice(0,3);
    const best=ranked[0]||{label:'',score:0},label=best.label,pct=best.score*100;
