@@ -32,12 +32,13 @@ const notice=document.querySelector('.notice');
 const MODEL_URL='https://huggingface.co/AmimulBmeIU/asl-alphabet-classifier/resolve/main/tfjs/model.json';
 const LABELS_URL='https://huggingface.co/AmimulBmeIU/asl-alphabet-classifier/resolve/main/labels.json';
 function setNotice(html){notice.innerHTML=html;}
-async function loadScript(src){const fallbacks=src.includes('@tensorflow/tfjs')?['https://unpkg.com/@tensorflow/tfjs@4.22.0/dist/tf.min.js']:src.includes('@mediapipe/tasks-vision')?['https://unpkg.com/@mediapipe/tasks-vision@0.10.14/vision_bundle.js']:[];let lastError;for(const url of [src,...fallbacks]){try{await new Promise((resolve,reject)=>{const s=document.createElement('script');s.src=url;s.onload=resolve;s.onerror=()=>{s.remove();reject(new Error('Could not load '+url));};document.head.appendChild(s);});return;}catch(e){lastError=e;console.warn('SignFlow library load failed:',url,e);}}throw lastError||new Error('Could not load browser library');}
+async function loadScript(src){const fallbacks=src.includes('@tensorflow/tfjs')?['https://unpkg.com/@tensorflow/tfjs@4.22.0/dist/tf.min.js']:[];let lastError;for(const url of [src,...fallbacks]){try{await new Promise((resolve,reject)=>{const s=document.createElement('script');s.src=url;s.onload=resolve;s.onerror=()=>{s.remove();reject(new Error('Could not load '+url));};document.head.appendChild(s);});return;}catch(e){lastError=e;console.warn('SignFlow library load failed:',url,e);}}throw lastError||new Error('Could not load browser library');}
 async function loadRecognitionModel(){
  try{
   setNotice('<b>Loading recognition model…</b> SignFlow is downloading a browser-compatible ASL alphabet model. Keep this page open.');
   await loadScript('https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js');
-  await loadScript('https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/vision_bundle.js');
+  const mediaPipe=await import('https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/vision_bundle.mjs');
+  const {FilesetResolver,HandLandmarker}=mediaPipe;
   const modelJson=await (await fetch(MODEL_URL)).json();
   const inputLayer=modelJson.modelTopology?.model_config?.config?.layers?.find(layer=>layer.class_name==='InputLayer');
   if(inputLayer?.config?.batch_shape){inputLayer.config.batchInputShape=inputLayer.config.batch_shape;delete inputLayer.config.batch_shape;}
