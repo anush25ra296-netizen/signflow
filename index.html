@@ -83,7 +83,7 @@ function recognizeFrame(){
    history.push({label,score:best.score});if(history.length>12)history.shift();
    const recent=history.slice(-12).filter(x=>x.score>=MIN_CONFIDENCE),counts={};recent.forEach(x=>counts[x.label]=(counts[x.label]||0)+1);
    const stableLabel=Object.keys(counts).sort((a,b)=>counts[b]-counts[a])[0]||'';
-   $('letter').textContent=pct>=MIN_CONFIDENCE*100?(label||'—'):'?';$('confidence').textContent=pct.toFixed(1)+'%';$('meter').style.width=Math.max(0,Math.min(100,pct))+'%';
+   $('letter').textContent=pct>=MIN_CONFIDENCE*100?(label||'—'):'—';$('confidence').textContent=pct.toFixed(1)+'%';$('meter').style.width=Math.max(0,Math.min(100,pct))+'%';
    status.textContent=pct<MIN_CONFIDENCE*100?'Low confidence — adjust hand or lighting':(stableLabel===label&&counts[label]>=8?'Sign detected — hold steady':'Checking sign across frames…');
    if(pct>=MIN_CONFIDENCE*100&&label&&label===previousLetter)stableFrames++;else{previousLetter=label;stableFrames=1;}
    if(stableFrames>=REQUIRED_STABLE_FRAMES&&label&&label!=='J'&&label!=='Z'&&stableLabel===label&&counts[label]>=8)appendLetter(label);
