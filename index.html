@@ -3,149 +3,97 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>SignFlow — Your Personal ASL Lab</title>
+<meta name="theme-color" content="#07131a">
+<title>SignFlow — Your ASL Recognition Lab</title>
 <style>
 :root{color-scheme:dark;--bg:#07131a;--panel:#10232b;--line:#24444a;--text:#ecfff9;--muted:#a4c4c5;--accent:#63e6be}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px system-ui,sans-serif}main{max-width:1100px;margin:auto;padding:28px 18px 50px}header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:38px}.brand{font-size:21px;font-weight:800}.logo{display:inline-grid;place-items:center;width:42px;height:42px;border-radius:13px;background:var(--accent);color:#10172d;margin-right:10px}.pill{font-size:11px;color:#9bf1d6;border:1px solid #37645b;background:#14302f;border-radius:99px;padding:8px 12px}h1{font-size:clamp(34px,5vw,54px);line-height:1.05;max-width:750px;margin:0 0 14px;letter-spacing:-1px}.lead{color:#b4c0d8;line-height:1.7;max-width:740px;margin:0 0 28px}.grid{display:grid;grid-template-columns:1.15fr .85fr;gap:18px}.panel{background:var(--panel);border:1px solid var(--line);border-radius:19px;overflow:hidden}.panelhead{padding:16px 19px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;font-size:13px;font-weight:750}.small{font-size:12px;color:var(--muted);font-weight:500}.camera{aspect-ratio:4/3;background:#050914;display:grid;place-items:center;position:relative;overflow:hidden}.camera video{width:100%;height:100%;object-fit:cover;transform:scaleX(-1);display:none}.placeholder{text-align:center;color:#9daac6;line-height:1.7;padding:22px}.icon{display:block;font-size:44px}.frame{position:absolute;inset:18px;border:1px solid #91a5ff66;border-radius:14px;display:none;pointer-events:none}.controls,.buttons{display:flex;flex-wrap:wrap;gap:9px;padding:15px}button{border:0;border-radius:11px;padding:12px 15px;font-weight:750;cursor:pointer;font-size:13px}.primary{background:var(--accent);color:#10172d}.secondary{background:#202d47;color:var(--text);border:1px solid #394965}button:disabled{opacity:.5}.prediction,.outputbox,.builder{padding:20px}.right{display:flex;flex-direction:column;gap:18px}.eyebrow{font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);font-weight:800}.letter{font-size:88px;text-align:center;font-weight:850;color:#aab9ff;margin:8px 0}.status{text-align:center;color:#b3c0d8;font-size:13px;min-height:22px}.meter{height:7px;background:#283650;border-radius:9px;overflow:hidden;margin:16px 0 8px}.meter span{display:block;height:100%;width:0;background:linear-gradient(90deg,#7b8fff,#55d6a2)}.confidence{display:flex;justify-content:space-between;color:var(--muted);font-size:12px}.candidates{display:grid;gap:7px;margin-top:18px}.candidate{display:grid;grid-template-columns:52px 1fr 42px;gap:8px;align-items:center;font-size:12px;color:var(--muted)}.candidate b{color:var(--text);font-size:13px}.candidate-track{height:6px;background:#283650;border-radius:9px;overflow:hidden}.candidate-track span{display:block;height:100%;background:#7b8fff;border-radius:9px}.output{min-height:72px;background:#0b1324;border:1px solid var(--line);border-radius:12px;padding:14px;font-size:20px;white-space:pre-wrap;overflow-wrap:anywhere}.outputcontrols{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.outputcontrols button{font-size:11px;padding:9px 11px}.notice{margin-top:18px;padding:14px 16px;border:1px solid #66552f;background:#2a2417;color:#f0dfaf;border-radius:13px;font-size:12px;line-height:1.7}.builder{margin-top:18px}.builder p,.feature p{font-size:13px;color:var(--muted);line-height:1.6}input{width:100%;padding:14px;border:1px solid #394965;background:#0b1324;color:var(--text);border-radius:11px;font:inherit;font-size:18px}.wordgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}.wordcard{border:1px solid var(--line);background:#0b1324;border-radius:12px;padding:14px;min-width:0}.wordvalue{font-size:24px;font-weight:800;min-height:36px;margin-top:6px;overflow-wrap:anywhere}.features{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}.feature{padding:17px;background:#111b2e;border:1px solid var(--line);border-radius:15px}.feature b{display:block;margin:8px 0}.feature p{margin:0;font-size:12px}.foot{color:#8f9db8;font-size:11px;line-height:1.6;margin-top:20px}@media(max-width:760px){.grid,.features,.wordgrid{grid-template-columns:1fr}header{align-items:flex-start}.letter{font-size:75px}}
-.trace-overlay{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:4}
-
-/* Personal SignFlow theme */
-:root{--accent:#63e6be}
-main{max-width:1240px;background-image:radial-gradient(ellipse at 10% 0%,#164a48 0%,transparent 42%),radial-gradient(ellipse at 92% 24%,#172e55 0%,transparent 36%);border-radius:0}
-.logo{background:linear-gradient(135deg,#63e6be,#a8f3d7);box-shadow:0 8px 28px #63e6be25}
-.pill{border-color:#32695f;background:#102d2b;color:#9bf1d6}
-.panel{box-shadow:0 18px 45px #00000020;border-radius:20px}
-.panelhead{background:#122832}
-.primary{background:linear-gradient(135deg,#63e6be,#a8f3d7);color:#06251f;box-shadow:0 8px 20px #63e6be20}
-.secondary{background:#172e39;border-color:#31515a}
-.letter{color:#8ef0d0;text-shadow:0 0 35px #63e6be22}
-.output{background:#08191f;border-color:#31515a}
-.notice{border-color:#32695f;background:#102d2b;color:#c4f8e7}
-.feature{background:#10232b;border-color:#24444a;border-radius:16px}
-.camera{background:radial-gradient(ellipse at center,#122b36,#050b10)}
-button{transition:transform .16s ease,filter .16s ease}
-button:hover:not(:disabled){transform:translateY(-1px);filter:brightness(1.08)}
-h1{letter-spacing:-2px}
-.personal-tags{display:flex;gap:10px;flex-wrap:wrap;margin:-20px 0 25px;color:#a4c4c5;font-size:12px}
-.personal-tags span{border:1px solid #24444a;background:#10232b;padding:8px 11px;border-radius:999px}
-@media(max-width:780px){main{padding-top:20px}.personal-tags{margin-top:-15px}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}main{max-width:1200px;margin:auto;padding:28px 18px 48px;background-image:radial-gradient(ellipse at 10% 0%,#164a48 0%,transparent 42%),radial-gradient(ellipse at 92% 24%,#172e55 0%,transparent 36%)}header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:34px}.brand{font-size:21px;font-weight:800;display:flex;align-items:center;gap:10px}.logo{display:grid;place-items:center;width:42px;height:42px;border-radius:13px;background:linear-gradient(135deg,#63e6be,#a8f3d7);color:#06251f}.pill{font-size:11px;color:#9bf1d6;border:1px solid #37645b;background:#14302f;border-radius:99px;padding:8px 12px}.tags{display:flex;flex-wrap:wrap;gap:9px;margin:-18px 0 24px;color:var(--muted);font-size:12px}.tags span{border:1px solid var(--line);background:var(--panel);padding:7px 10px;border-radius:99px}h1{font-size:clamp(34px,5vw,54px);line-height:1.05;max-width:760px;margin:0 0 14px;letter-spacing:-1.8px}.lead{color:#b4c0d8;line-height:1.7;max-width:760px;margin:0 0 26px}.grid{display:grid;grid-template-columns:1.15fr .85fr;gap:18px}.panel{background:var(--panel);border:1px solid var(--line);border-radius:19px;overflow:hidden;box-shadow:0 18px 45px #00000020}.panelhead{padding:16px 19px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:13px;font-weight:750;background:#122832}.small{font-size:12px;color:var(--muted);font-weight:500}.camera{aspect-ratio:4/3;background:radial-gradient(ellipse at center,#122b36,#050b10);display:grid;place-items:center;position:relative;overflow:hidden}.camera video{width:100%;height:100%;object-fit:cover;transform:scaleX(-1);display:none}.trace-overlay{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:3}.placeholder{text-align:center;color:#9daac6;line-height:1.7;padding:22px}.icon{display:block;font-size:44px}.frame{position:absolute;inset:18px;border:1px solid #91a5ff66;border-radius:14px;display:none;pointer-events:none}.controls,.buttons{display:flex;flex-wrap:wrap;gap:9px;padding:15px}button{border:0;border-radius:11px;padding:12px 15px;font-weight:750;cursor:pointer;font-size:13px;transition:transform .16s ease,filter .16s ease}button:hover:not(:disabled){transform:translateY(-1px);filter:brightness(1.08)}button:disabled{opacity:.5;cursor:not-allowed}.primary{background:linear-gradient(135deg,#63e6be,#a8f3d7);color:#06251f;box-shadow:0 8px 20px #63e6be20}.secondary{background:#172e39;color:var(--text);border:1px solid #31515a}.right{display:flex;flex-direction:column;gap:18px}.prediction,.outputbox,.builder{padding:20px}.eyebrow{font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);font-weight:800}.letter{font-size:88px;text-align:center;font-weight:850;color:#8ef0d0;margin:8px 0;text-shadow:0 0 35px #63e6be22}.status{text-align:center;color:#b3c0d8;font-size:13px;min-height:22px}.meter{height:7px;background:#283650;border-radius:9px;overflow:hidden;margin:16px 0 8px}.meter span{display:block;height:100%;width:0;background:linear-gradient(90deg,#7b8fff,#55d6a2)}.confidence{display:flex;justify-content:space-between;color:var(--muted);font-size:12px}.candidates{display:grid;gap:8px;margin-top:17px}.candidate{display:grid;grid-template-columns:52px 1fr 42px;gap:8px;align-items:center;font-size:12px;color:var(--muted)}.candidate b{color:var(--text);font-size:13px}.track{height:6px;background:#283650;border-radius:9px;overflow:hidden}.track span{display:block;height:100%;background:#7b8fff;border-radius:9px}.output{min-height:72px;background:#08191f;border:1px solid #31515a;border-radius:12px;padding:14px;font-size:20px;white-space:pre-wrap;overflow-wrap:anywhere}.outputcontrols{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.outputcontrols button{font-size:11px;padding:9px 11px}.notice{margin-top:18px;padding:14px 16px;border:1px solid #32695f;background:#102d2b;color:#c4f8e7;border-radius:13px;font-size:12px;line-height:1.7}.builder{margin-top:18px}.builder p,.feature p{font-size:13px;color:var(--muted);line-height:1.6}.builder h2{font-size:23px;margin:8px 0}input{width:100%;padding:14px;border:1px solid #31515a;background:#08191f;color:var(--text);border-radius:11px;font:inherit;font-size:18px}.wordgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}.wordcard{border:1px solid var(--line);background:#0b1324;border-radius:12px;padding:14px;min-width:0}.wordvalue{font-size:24px;font-weight:800;min-height:36px;margin-top:6px;overflow-wrap:anywhere}.features{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}.feature{padding:17px;background:#10232b;border:1px solid var(--line);border-radius:15px}.feature b{display:block;margin:8px 0}.feature p{margin:0;font-size:12px}.foot{color:#8f9db8;font-size:11px;line-height:1.7;margin-top:20px}a{color:#8ef0d0}@media(max-width:760px){.grid,.features,.wordgrid{grid-template-columns:1fr}header{align-items:flex-start}.letter{font-size:75px}.pill{max-width:145px;text-align:center}}
 </style>
 </head>
 <body><main>
-<header><div class="brand"><span class="logo">✋</span>SignFlow <span class="small">/ LIVE LAB</span></div><div class="pill">● YOUR PERSONAL ASL LAB</div></header><div class="personal-tags"><span>✦ Personal project</span><span>◎ Camera-first workspace</span><span>⌨ Letter-to-word builder</span></div>
+<header><div class="brand"><span class="logo">✋</span>SignFlow <span class="small">/ YOUR ASL LAB</span></div><div class="pill">● AUTOMATIC MODE</div></header>
+<div class="tags"><span>✦ Personal project</span><span>◎ Camera-first</span><span>⌨ Letter-to-word workspace</span></div>
 <h1>Your hands. Your words. Your SignFlow.</h1>
-<p class="lead">Welcome to your personal, browser-based sign language workspace. Use the camera, follow live predictions when the model loads, and build letters into words and sentences — all in one place.</p>
+<p class="lead">A browser-based ASL fingerspelling workspace. Start the camera, hold a hand sign steady, and build recognized letters into words and sentences. Camera frames are processed on your device.</p>
 <div class="grid">
 <section class="panel"><div class="panelhead"><span>Live camera</span><span class="small" id="cameraState">Camera is off</span></div><div class="camera"><video id="video" autoplay playsinline muted></video><canvas id="handTraces" class="trace-overlay" aria-hidden="true"></canvas><div class="placeholder" id="placeholder"><span class="icon">◎</span>Camera preview appears here<br><span class="small">Keep your hand centered and well lit</span></div><div class="frame" id="frame"></div></div><div class="controls"><button class="primary" id="start">Start camera</button><button class="secondary" id="stop" disabled>Stop camera</button></div></section>
-<div class="right"><section class="panel prediction"><div class="eyebrow">Current prediction</div><div class="letter" id="letter">—</div><div class="status" id="status">Start the camera to preview it</div><div class="meter"><span id="meter"></span></div><div class="confidence"><span>Model confidence</span><b id="confidence">Not connected</b></div><div class="candidates" id="candidates" aria-live="polite"><div class="small">Top predictions will appear here</div></div></section>
-<section class="panel outputbox"><div class="eyebrow">Recognized text</div><div class="output" id="output" aria-live="polite"></div><div class="outputcontrols"><button class="secondary" id="backspace">⌫ Delete last</button><button class="secondary" id="space">Add space</button><button class="secondary" id="clear">Clear text</button></div></section></div>
-</div>
-<section class="panel" id="resnetDemoPanel" style="margin-top:18px;border-color:#32695f">
-<div class="panelhead"><span>ResNet-50 live ASL recognizer</span><span class="small">External browser demo</span></div>
-<div style="padding:18px 20px 12px">
-<p style="margin:0 0 12px;color:var(--muted);font-size:13px;line-height:1.7">Try this browser-based ASL alphabet demo, which offers ResNet-50 and a lightweight landmark model. Allow camera access inside the demo if prompted.</p>
-<a href="https://asl.raphaelkaramagi.com/" target="_blank" rel="noopener noreferrer" style="display:inline-block;padding:11px 14px;border-radius:10px;background:var(--accent);color:#06251f;text-decoration:none;font-weight:800;font-size:12px">Open ResNet-50 recognizer ↗</a>
-</div>
-<iframe title="External ResNet-50 ASL recognition demo" src="https://asl.raphaelkaramagi.com/" loading="lazy" allow="camera; autoplay" referrerpolicy="strict-origin-when-cross-origin" style="display:block;width:100%;height:720px;border:0;background:#07131a"></iframe>
-<p style="margin:0;padding:12px 18px;color:var(--muted);font-size:11px;line-height:1.7">Note: this is an external demo embedded in SignFlow. Browser cross-origin security means its predictions cannot automatically be sent to SignFlow's recognized-text box. SignFlow's own model and text builder remain separate.</p>
-</section>
-<div class="notice"><b>Recognition status:</b> SignFlow attempts to load a browser-based ASL alphabet model. If the model loads, hold each static letter steady to build text. If loading fails, the camera and text builder remain available, but live predictions will not work. Static classifiers do not recognize movement-based J and Z.</div>
-<section class="panel builder"><div class="eyebrow">Letter-to-word builder</div><h2 style="font-size:23px;margin:8px 0">Turn letters into words</h2><p>Type letters here to test the builder. When a recognition model is integrated, its predictions can be connected to this input.</p><label for="letterEntry" class="small" style="display:block;margin:12px 0 7px">Letters (test input)</label><input id="letterEntry" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="Type letters, e.g. HELLO"><div class="wordgrid"><div class="wordcard"><div class="eyebrow">Current word</div><div id="currentWord" class="wordvalue">—</div></div><div class="wordcard"><div class="eyebrow">Built sentence</div><div id="builtSentence" class="wordvalue" style="font-size:18px"></div></div></div><div class="buttons"><button class="primary" id="finishWord">Finish word</button><button class="secondary" id="addSpace">Add space</button><button class="secondary" id="resetBuilder">Reset builder</button></div><p id="builderStatus" aria-live="polite">Ready for text input.</p></section>
-<div class="features"><div class="feature">⚡<b>Camera preview</b><p>Start and stop camera access using browser permission.</p></div><div class="feature">✓<b>Honest predictions</b><p>No fake letters are displayed while a trained model is unavailable.</p></div><div class="feature">⌨<b>Text builder</b><p>Combine letters into words and sentences with simple controls.</p></div></div>
-<p class="foot">SignFlow · Your personal ASL learning prototype. Camera frames are processed in your browser; recognition quality depends on the model, lighting, and hand position. J and Z require movement-aware recognition.</p>
+<div class="right">
+<section class="panel prediction"><div class="eyebrow">Current prediction</div><div class="letter" id="letter">—</div><div class="status" id="status">Loading recognition model…</div><div class="meter"><span id="meter"></span></div><div class="confidence"><span>Model confidence</span><b id="confidence">Loading…</b></div><div class="candidates" id="candidates" aria-live="polite"><div class="small">Top predictions will appear here</div></div></section>
+<section class="panel outputbox"><div class="eyebrow">Recognized text</div><div class="output" id="output" aria-live="polite"></div><div class="outputcontrols"><button class="secondary" id="backspace">⌫ Delete last</button><button class="secondary" id="space">Add space</button><button class="secondary" id="clear">Clear text</button></div></section>
+</div></div>
+<div class="notice" id="modelNotice"><b>Loading the model.</b> The first load may take a moment because the browser downloads the model and hand-tracking library.</div>
+<section class="panel builder"><div class="eyebrow">Letter-to-word builder</div><h2>Turn letters into words</h2><p>Recognized letters are added automatically below. You can also type letters to test the builder.</p><label for="letterEntry" class="small" style="display:block;margin:12px 0 7px">Letters</label><input id="letterEntry" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="Type letters, e.g. HELLO"><div class="wordgrid"><div class="wordcard"><div class="eyebrow">Current word</div><div id="currentWord" class="wordvalue">—</div></div><div class="wordcard"><div class="eyebrow">Built sentence</div><div id="builtSentence" class="wordvalue" style="font-size:18px"></div></div></div><div class="buttons"><button class="primary" id="finishWord">Finish word</button><button class="secondary" id="addSpace">Add space</button><button class="secondary" id="resetBuilder">Reset builder</button></div><p id="builderStatus" aria-live="polite">Ready for text input.</p></section>
+<section class="panel" style="margin-top:18px;padding:19px"><div class="eyebrow">Model information</div><h2 style="font-size:20px;margin:8px 0">Browser-based landmark classifier</h2><p style="color:var(--muted);font-size:13px;line-height:1.7;margin:0">SignFlow uses the MIT-licensed <a href="https://huggingface.co/AmimulBmeIU/asl-alphabet-classifier" target="_blank" rel="noopener noreferrer">ASL Alphabet Classifier</a> model by AmimulBmeIU. Its model card reports 94.15% validation accuracy for static letters A–Y excluding J and Z; real-world results can differ. J and Z require movement-aware recognition and are not supported by this static classifier. <a href="https://huggingface.co/AmimulBmeIU/asl-alphabet-classifier/blob/main/README.md" target="_blank" rel="noopener noreferrer">Model details and license</a>.</p></section>
+<div class="features"><div class="feature">⚡<b>Continuous camera</b><p>Start the camera once and keep signing until you stop it.</p></div><div class="feature">✓<b>Stable predictions</b><p>Confidence and repeated frames help reduce accidental letters.</p></div><div class="feature">⌨<b>Text builder</b><p>Build words and sentences with the automatic letter input.</p></div></div>
+<p class="foot">SignFlow · A personal ASL learning prototype. Use good lighting and keep one hand visible. Predictions are experimental and should not be relied on for important communication. Static letter recognition does not cover ASL grammar, facial expression, or movement-based signs.</p>
 </main>
 <script>
 const $=id=>document.getElementById(id);
 const video=$('video'),placeholder=$('placeholder'),frame=$('frame'),start=$('start'),stop=$('stop'),state=$('cameraState'),status=$('status'),output=$('output');
 const traceCanvas=$('handTraces'),traceCtx=traceCanvas.getContext('2d');
-const fingerLinks=[[0,1],[1,2],[2,3],[3,4],[0,5],[5,6],[6,7],[7,8],[5,9],[9,10],[10,11],[11,12],[9,13],[13,14],[14,15],[15,16],[13,17],[17,18],[18,19],[19,20],[0,17]];
-function clearHandTraces(){traceCtx.clearRect(0,0,traceCanvas.width,traceCanvas.height);}
-function drawHandTraces(points){const w=traceCanvas.clientWidth,h=traceCanvas.clientHeight,dpr=window.devicePixelRatio||1;if(!w||!h)return;if(traceCanvas.width!==Math.round(w*dpr)||traceCanvas.height!==Math.round(h*dpr)){traceCanvas.width=Math.round(w*dpr);traceCanvas.height=Math.round(h*dpr);}traceCtx.setTransform(dpr,0,0,dpr,0,0);traceCtx.clearRect(0,0,w,h);traceCtx.lineCap='round';traceCtx.lineJoin='round';traceCtx.strokeStyle='#55D6A2';traceCtx.lineWidth=3;for(const [a,b] of fingerLinks){traceCtx.beginPath();traceCtx.moveTo((1-points[a].x)*w,points[a].y*h);traceCtx.lineTo((1-points[b].x)*w,points[b].y*h);traceCtx.stroke();}points.forEach((p,i)=>{traceCtx.beginPath();traceCtx.arc((1-p.x)*w,p.y*h,i===0?5:3.5,0,Math.PI*2);traceCtx.fillStyle=[4,8,12,16,20].includes(i)?'#7B8FFF':'#F1F4FF';traceCtx.fill();traceCtx.strokeStyle='#17213A';traceCtx.lineWidth=1.2;traceCtx.stroke();});}
-let stream=null, handLandmarker=null, model=null, labels=[], animationId=null, lastVideoTime=-1;
-let previousLetter='', stableFrames=0, lastInsertedLetter='', lastInsertTime=0;
-const predictionHistory=[];
-const MIN_CONFIDENCE=0.70;
-const REQUIRED_STABLE_FRAMES=12;
-const notice=document.querySelector('.notice');
+const links=[[0,1],[1,2],[2,3],[3,4],[0,5],[5,6],[6,7],[7,8],[5,9],[9,10],[10,11],[11,12],[9,13],[13,14],[14,15],[15,16],[13,17],[17,18],[18,19],[19,20],[0,17]];
+let stream=null,handLandmarker=null,model=null,labels=[],animationId=null,lastVideoTime=-1;
+let previousLetter='',stableFrames=0,lastInsertedLetter='',lastInsertTime=0;
+const history=[];
+const MIN_CONFIDENCE=0.70,REQUIRED_STABLE_FRAMES=12;
 const MODEL_URL='https://huggingface.co/AmimulBmeIU/asl-alphabet-classifier/resolve/main/tfjs/model.json';
 const LABELS_URL='https://huggingface.co/AmimulBmeIU/asl-alphabet-classifier/resolve/main/labels.json';
-function setNotice(html){notice.innerHTML=html;}
-async function loadScript(src){const fallbacks=src.includes('@tensorflow/tfjs')?['https://unpkg.com/@tensorflow/tfjs@4.22.0/dist/tf.min.js']:[];let lastError;for(const url of [src,...fallbacks]){try{await new Promise((resolve,reject)=>{const s=document.createElement('script');s.src=url;s.onload=resolve;s.onerror=()=>{s.remove();reject(new Error('Could not load '+url));};document.head.appendChild(s);});return;}catch(e){lastError=e;console.warn('SignFlow library load failed:',url,e);}}throw lastError||new Error('Could not load browser library');}
-async function loadRecognitionModel(){
+function setNotice(html){$('modelNotice').innerHTML=html;}
+function clearTraces(){traceCtx.clearRect(0,0,traceCanvas.width,traceCanvas.height);}
+function drawTraces(points){const w=traceCanvas.clientWidth,h=traceCanvas.clientHeight,dpr=window.devicePixelRatio||1;if(!w||!h)return;if(traceCanvas.width!==Math.round(w*dpr)||traceCanvas.height!==Math.round(h*dpr)){traceCanvas.width=Math.round(w*dpr);traceCanvas.height=Math.round(h*dpr);}traceCtx.setTransform(dpr,0,0,dpr,0,0);traceCtx.clearRect(0,0,w,h);traceCtx.lineCap='round';traceCtx.lineJoin='round';traceCtx.strokeStyle='#55D6A2';traceCtx.lineWidth=3;for(const [a,b] of links){traceCtx.beginPath();traceCtx.moveTo((1-points[a].x)*w,points[a].y*h);traceCtx.lineTo((1-points[b].x)*w,points[b].y*h);traceCtx.stroke();}points.forEach((p,i)=>{traceCtx.beginPath();traceCtx.arc((1-p.x)*w,p.y*h,i===0?5:3.5,0,Math.PI*2);traceCtx.fillStyle=[4,8,12,16,20].includes(i)?'#7B8FFF':'#F1F4FF';traceCtx.fill();traceCtx.strokeStyle='#17213A';traceCtx.lineWidth=1.2;traceCtx.stroke();});}
+async function loadScript(url){await new Promise((resolve,reject)=>{const s=document.createElement('script');s.src=url;s.onload=resolve;s.onerror=()=>{s.remove();reject(new Error('Could not load browser library'));};document.head.appendChild(s);});}
+async function loadModel(){
  try{
-  setNotice('<b>Loading recognition model…</b> SignFlow is downloading a browser-compatible ASL alphabet model. Keep this page open.');
+  setNotice('<b>Loading recognition model…</b> The browser is downloading the model and hand-tracking library. Keep this page open.');
   await loadScript('https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js');
   const mediaPipe=await import('https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/vision_bundle.mjs');
-  const {FilesetResolver,HandLandmarker}=mediaPipe;
-  const modelJson=await (await fetch(MODEL_URL)).json();
+  const modelResponse=await fetch(MODEL_URL);if(!modelResponse.ok)throw new Error('Model config returned HTTP '+modelResponse.status);
+  const modelJson=await modelResponse.json();
   const inputLayer=modelJson.modelTopology?.model_config?.config?.layers?.find(layer=>layer.class_name==='InputLayer');
   if(inputLayer?.config?.batch_shape){inputLayer.config.batchInputShape=inputLayer.config.batch_shape;delete inputLayer.config.batch_shape;}
-  const weightUrl='https://huggingface.co/AmimulBmeIU/asl-alphabet-classifier/resolve/main/tfjs/group1-shard1of1.bin';
-  const weightResponse=await fetch(weightUrl);
+  const weightResponse=await fetch('https://huggingface.co/AmimulBmeIU/asl-alphabet-classifier/resolve/main/tfjs/group1-shard1of1.bin');
   if(!weightResponse.ok)throw new Error('Model weights returned HTTP '+weightResponse.status);
   const weightData=await weightResponse.arrayBuffer();
   const modelName=modelJson.modelTopology?.model_config?.config?.name;
   const weightSpecs=modelJson.weightsManifest.flatMap(group=>group.weights).map(weight=>({...weight,name:modelName&&weight.name.startsWith(modelName+'/')?weight.name.slice(modelName.length+1):weight.name}));
   model=await tf.loadLayersModel({load:async()=>({modelTopology:modelJson.modelTopology,weightSpecs,weightData})});
-  const labelData=await (await fetch(LABELS_URL)).json();
-  labels=Array.isArray(labelData)?labelData:(labelData.labels||labelData.classes||labelData.class_names||[]);
-  if(!labels.length) throw new Error('The model labels could not be read.');
+  const labelResponse=await fetch(LABELS_URL);if(!labelResponse.ok)throw new Error('Model labels returned HTTP '+labelResponse.status);
+  const labelData=await labelResponse.json();labels=Array.isArray(labelData)?labelData:(labelData.labels||labelData.classes||labelData.class_names||[]);
+  if(!labels.length)throw new Error('Model labels could not be read.');
+  const {FilesetResolver,HandLandmarker}=mediaPipe;
   const vision=await FilesetResolver.forVisionTasks('https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/wasm');
   handLandmarker=await HandLandmarker.createFromOptions(vision,{baseOptions:{modelAssetPath:'https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task',delegate:'CPU'},runningMode:'VIDEO',numHands:1});
-  $('confidence').textContent='Ready';
-  status.textContent='Model ready — start the camera';
-  setNotice('<b>Recognition model loaded.</b> SignFlow now shows the top three guesses and filters low-confidence, unstable predictions before adding a letter. Hold a static ASL sign steady in good lighting. Movement-based J and Z are not supported by this model.');
- }catch(e){
-  console.error('SignFlow model load failed:',e);
-  status.textContent='Model failed to load';
-  $('confidence').textContent='Unavailable';
-  setNotice('<b>Automatic recognition could not start.</b> The model or browser libraries could not load ('+String(e.message||e)+'). Refresh the page and try again. If the problem continues, use the linked model demo while we troubleshoot.');
- }
+  $('confidence').textContent='Ready';status.textContent='Model ready — start the camera';
+  setNotice('<b>Recognition model loaded.</b> Hold one static ASL letter steady in good lighting. SignFlow filters low-confidence and unstable predictions before adding letters. J and Z are not supported because they require movement recognition.');
+ }catch(e){console.error('SignFlow model load failed:',e);status.textContent='Model failed to load';$('confidence').textContent='Unavailable';setNotice('<b>Automatic recognition could not start.</b> '+String(e.message||e)+'. The text builder still works. Try refreshing the page; if the issue continues, check your internet connection or browser console.');}
 }
-function appendLetter(ch){
- const now=Date.now();
- if(ch===lastInsertedLetter&&now-lastInsertTime<1200)return;
- output.textContent+=ch;
- $('letterEntry').value+=ch;
- $('letterEntry').dispatchEvent(new Event('input',{bubbles:true}));
- lastInsertedLetter=ch;lastInsertTime=now;
-}
+function appendLetter(ch){const now=Date.now();if(ch===lastInsertedLetter&&now-lastInsertTime<1400)return;output.textContent+=ch;$('letterEntry').value+=ch;$('letterEntry').dispatchEvent(new Event('input',{bubbles:true}));lastInsertedLetter=ch;lastInsertTime=now;}
 function recognizeFrame(){
  if(!stream||!model||!handLandmarker){animationId=requestAnimationFrame(recognizeFrame);return;}
- if(video.readyState>=2&&video.currentTime!==lastVideoTime){
-  lastVideoTime=video.currentTime;
-  try{
-   const result=handLandmarker.detectForVideo(video,performance.now());
-   if(result.landmarks&&result.landmarks.length){
-    const pts=result.landmarks[0],wrist=pts[0];drawHandTraces(pts);let scale=0;
-    for(const p of pts)scale=Math.max(scale,Math.abs(p.x-wrist.x),Math.abs(p.y-wrist.y),Math.abs(p.z-wrist.z));
-    const input=pts.flatMap(p=>[(p.x-wrist.x)/(scale||1),(p.y-wrist.y)/(scale||1),(p.z-wrist.z)/(scale||1)]);
-    const tensor=tf.tensor2d([input]);const prediction=model.predict(tensor);const scores=prediction.dataSync();tensor.dispose();prediction.dispose();
-    const ranked=Array.from(scores,(score,i)=>({label:String(labels[i]??'').toUpperCase().replace(/[^A-Z]/g,'').slice(0,1),score:Number(score)})).filter(item=>item.label).sort((a,b)=>b.score-a.score).slice(0,3);
-    const best=ranked[0]||{label:'',score:0};const label=best.label,pct=best.score*100;
-    $('candidates').innerHTML=ranked.map((item,i)=>'<div class="candidate"><b>'+(i+1)+'. '+item.label+'</b><div class="candidate-track"><span style="width:'+Math.max(0,Math.min(100,item.score*100))+'%"></span></div><span>'+Math.round(item.score*100)+'%</span></div>').join('');
-    predictionHistory.push({label,score:best.score});if(predictionHistory.length>12)predictionHistory.shift();
-    const recent=predictionHistory.slice(-12).filter(item=>item.score>=MIN_CONFIDENCE);const counts={};for(const item of recent)counts[item.label]=(counts[item.label]||0)+1;
-    const stableLabel=Object.keys(counts).sort((a,b)=>counts[b]-counts[a])[0]||'';
-    $('letter').textContent=pct>=MIN_CONFIDENCE*100?(label||'—'):'?';$('confidence').textContent=pct.toFixed(1)+'%';$('meter').style.width=Math.max(0,Math.min(100,pct))+'%';
-    status.textContent=pct<MIN_CONFIDENCE*100?'Not sure — adjust your hand or lighting':(stableLabel===label&&counts[label]>=8?'Sign detected — hold steady':'Checking sign across frames…');
-    if(pct>=MIN_CONFIDENCE*100&&label&&label===previousLetter)stableFrames++;else{previousLetter=label;stableFrames=1;}
-    if(stableFrames>=REQUIRED_STABLE_FRAMES&&label&&label!=='J'&&label!=='Z'&&stableLabel===label&&counts[label]>=8)appendLetter(label);
-    if(pct<MIN_CONFIDENCE*100){stableFrames=0;previousLetter='';}
-   }else{clearHandTraces();$('letter').textContent='—';status.textContent='Show one hand clearly in the camera';$('confidence').textContent='No hand';$('meter').style.width='0%';$('candidates').innerHTML='<div class="small">No hand detected</div>';stableFrames=0;previousLetter='';predictionHistory.length=0;}
-  }catch(e){console.error(e);status.textContent='Recognition error — refresh to retry';}
- }
+ if(video.readyState>=2&&video.currentTime!==lastVideoTime){lastVideoTime=video.currentTime;try{
+  const result=handLandmarker.detectForVideo(video,performance.now());
+  if(result.landmarks&&result.landmarks.length){
+   const pts=result.landmarks[0],wrist=pts[0];drawTraces(pts);let scale=0;
+   for(const p of pts)scale=Math.max(scale,Math.abs(p.x-wrist.x),Math.abs(p.y-wrist.y),Math.abs(p.z-wrist.z));
+   const input=pts.flatMap(p=>[(p.x-wrist.x)/(scale||1),(p.y-wrist.y)/(scale||1),(p.z-wrist.z)/(scale||1)]);
+   const tensor=tf.tensor2d([input]);const prediction=model.predict(tensor);const scores=prediction.dataSync();tensor.dispose();prediction.dispose();
+   const ranked=Array.from(scores,(score,i)=>({label:String(labels[i]??'').toUpperCase().replace(/[^A-Z]/g,'').slice(0,1),score:Number(score)})).filter(x=>x.label).sort((a,b)=>b.score-a.score).slice(0,3);
+   const best=ranked[0]||{label:'',score:0},label=best.label,pct=best.score*100;
+   $('candidates').innerHTML=ranked.map((item,i)=>'<div class="candidate"><b>'+(i+1)+'. '+item.label+'</b><div class="track"><span style="width:'+Math.max(0,Math.min(100,item.score*100))+'%"></span></div><span>'+Math.round(item.score*100)+'%</span></div>').join('');
+   history.push({label,score:best.score});if(history.length>12)history.shift();
+   const recent=history.slice(-12).filter(x=>x.score>=MIN_CONFIDENCE),counts={};recent.forEach(x=>counts[x.label]=(counts[x.label]||0)+1);
+   const stableLabel=Object.keys(counts).sort((a,b)=>counts[b]-counts[a])[0]||'';
+   $('letter').textContent=pct>=MIN_CONFIDENCE*100?(label||'—'):'?';$('confidence').textContent=pct.toFixed(1)+'%';$('meter').style.width=Math.max(0,Math.min(100,pct))+'%';
+   status.textContent=pct<MIN_CONFIDENCE*100?'Low confidence — adjust hand or lighting':(stableLabel===label&&counts[label]>=8?'Sign detected — hold steady':'Checking sign across frames…');
+   if(pct>=MIN_CONFIDENCE*100&&label&&label===previousLetter)stableFrames++;else{previousLetter=label;stableFrames=1;}
+   if(stableFrames>=REQUIRED_STABLE_FRAMES&&label&&label!=='J'&&label!=='Z'&&stableLabel===label&&counts[label]>=8)appendLetter(label);
+   if(pct<MIN_CONFIDENCE*100){stableFrames=0;previousLetter='';}
+  }else{clearTraces();$('letter').textContent='—';status.textContent='Show one hand clearly in the camera';$('confidence').textContent='No hand';$('meter').style.width='0%';$('candidates').innerHTML='<div class="small">No hand detected</div>';stableFrames=0;previousLetter='';history.length=0;}
+ }catch(e){console.error(e);status.textContent='Recognition error — refresh to retry';}}
  animationId=requestAnimationFrame(recognizeFrame);
 }
-start.addEventListener('click',async()=>{try{
- if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia)throw new Error('Camera access requires a secure HTTPS page.');
- stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user'},audio:false});
- video.srcObject=stream;video.style.display='block';placeholder.style.display='none';frame.style.display='block';await video.play();
- start.disabled=true;stop.disabled=false;state.textContent='Camera is running';
- if(model&&handLandmarker){status.textContent='Camera active — show an ASL letter';recognizeFrame();}
- else status.textContent='Camera active — waiting for recognition model';
- }catch(e){status.textContent=e.message||'Camera permission denied or unavailable.';state.textContent='Camera unavailable';}});
-function stopCamera(){if(stream)stream.getTracks().forEach(t=>t.stop());clearHandTraces();stream=null;if(animationId)cancelAnimationFrame(animationId);animationId=null;video.srcObject=null;video.style.display='none';placeholder.style.display='block';frame.style.display='none';start.disabled=false;stop.disabled=true;state.textContent='Camera is off';status.textContent=model?'Camera stopped':'Waiting for model';}
+start.addEventListener('click',async()=>{try{if(!navigator.mediaDevices?.getUserMedia)throw new Error('Camera access requires HTTPS and a supported browser.');stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user'},audio:false});video.srcObject=stream;video.style.display='block';placeholder.style.display='none';frame.style.display='block';await video.play();start.disabled=true;stop.disabled=false;state.textContent='Camera is running';if(model&&handLandmarker){status.textContent='Camera active — show an ASL letter';recognizeFrame();}else status.textContent='Camera active — waiting for model';}catch(e){status.textContent=e.message||'Camera permission denied or unavailable';state.textContent='Camera unavailable';}});
+function stopCamera(){if(stream)stream.getTracks().forEach(t=>t.stop());clearTraces();stream=null;if(animationId)cancelAnimationFrame(animationId);animationId=null;video.srcObject=null;video.style.display='none';placeholder.style.display='block';frame.style.display='none';start.disabled=false;stop.disabled=true;state.textContent='Camera is off';status.textContent=model?'Camera stopped':'Waiting for model';}
 stop.addEventListener('click',stopCamera);window.addEventListener('beforeunload',stopCamera);
 $('backspace').addEventListener('click',()=>{output.textContent=output.textContent.slice(0,-1);$('letterEntry').value=$('letterEntry').value.slice(0,-1);$('letterEntry').dispatchEvent(new Event('input',{bubbles:true}));});
 $('space').addEventListener('click',()=>{output.textContent+=' ';lastInsertedLetter='';});
@@ -153,8 +101,8 @@ $('clear').addEventListener('click',()=>{output.textContent='';$('letterEntry').
 const entry=$('letterEntry'),current=$('currentWord'),sentence=$('builtSentence'),builderStatus=$('builderStatus');let savedWords=[];
 function renderBuilder(){entry.value=entry.value.toUpperCase().replace(/[^A-Z ]/g,'').replace(/\s+/g,' ');const parts=entry.value.split(' ');current.textContent=parts[parts.length-1]||'—';sentence.textContent=[...savedWords,...parts.slice(0,-1).filter(Boolean)].join(' ');if(!entry.value.trim()&&!savedWords.length)sentence.textContent='';}
 function finishWord(){const words=entry.value.toUpperCase().trim().split(/\s+/).filter(Boolean);if(!words.length){builderStatus.textContent='Type a few letters first.';return;}savedWords.push(...words);entry.value='';current.textContent='—';sentence.textContent=savedWords.join(' ');builderStatus.textContent='Word added to your sentence. Continue entering letters.';lastInsertedLetter='';}
-entry.addEventListener('input',renderBuilder);$('finishWord').addEventListener('click',finishWord);$('addSpace').addEventListener('click',finishWord);$('resetBuilder').addEventListener('click',()=>{savedWords=[];entry.value='';current.textContent='—';sentence.textContent='';builderStatus.textContent='Builder cleared.';output.textContent='';lastInsertedLetter='';});entry.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();finishWord();}});
-loadRecognitionModel();
+entry.addEventListener('input',renderBuilder);$('finishWord').addEventListener('click',finishWord);$('addSpace').addEventListener('click',finishWord);$('resetBuilder').addEventListener('click',()=>{savedWords=[];entry.value='';current.textContent='—';sentence.textContent='';output.textContent='';builderStatus.textContent='Builder cleared.';lastInsertedLetter='';});entry.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();finishWord();}});
+loadModel();
 </script>
 </body>
 </html>
